@@ -49,6 +49,11 @@
         "mac": "cmd+s"
       },
       {
+        "key": "space",
+        "command":"quickStage.diffFile",
+        "when": "QuickStageFocused"
+      },
+      {
         "key": "ctrl+shift+s",
         "command": "quickStage.stageAll",
         "when": "QuickStageFocused",

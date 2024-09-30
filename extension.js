@@ -254,6 +254,70 @@ function activate(context) {
         }
       });
 
+      //   on Space
+      // ------------
+
+      stageFilePicker.diffFile = () => {
+        let selectedFile = stageFilePicker.activeItems[0].filepath;
+
+        console.log("selectedFile", selectedFile);
+
+        if (selectedFile) {
+          const workingFileUri = vscode.Uri.file(
+            path.join(workspaceFolder, selectedFile)
+          ); // Working version
+          const stagedFileUri = workingFileUri.with({
+            scheme: "git",
+            query: "HEAD",
+          }); // Staged version (HEAD)
+
+          // Open diff editor between staged and working directory versions
+          vscode.commands.executeCommand(
+            "vscode.diff",
+            stagedFileUri,
+            workingFileUri,
+            `Diff: ${selectedFile}`
+          );
+        } else {
+          vscode.window.showErrorMessage("No file selected for diff.");
+        }
+      };
+
+      // let previousValue;
+      // stageFilePicker.onDidChangeValue(async (value) => {
+      //   console.log('onDidChangeValue()',);
+      //   console.log('stageFilePicker',stageFilePicker);
+
+      //   console.log('value:',value);
+
+      //   if (value == " " || value.trim() === previousValue) {
+      //     console.log('detecting spacebar',);
+
+      //     // user pressed 'space'
+
+      //     console.log('stageFilePicker',stageFilePicker);
+      //     console.log('stageFilePicker.activeItems',stageFilePicker.activeItems);
+
+      //     const selectedItem = stageFilePicker.activeItems[0]
+
+      //     console.log('selectedItem',selectedItem);
+
+      //     const selectedFile = stageFilePicker.activeItems[0].filepath;
+
+      //     console.log('selectedFile',selectedFile);
+
+      //     const left = vscode.Uri.file(path.join(workspaceFolder, selectedFile)); // The working directory version
+      //     const right = vscode.Uri.file(path.join(workspaceFolder, selectedFile)).with({ scheme: "git" }); // The staged version
+
+      //     console.log('left',left);console.log('right',right);
+
+      //     vscode.commands.executeCommand("vscode.diff", left, right, `Diff: ${selectedFile}`);
+      //   }
+
+      //   previousValue = value.trim();
+
+      // });
+
       //   on Esc
       // ----------
 
